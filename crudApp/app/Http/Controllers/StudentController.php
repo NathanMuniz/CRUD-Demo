@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Student;
 
-
 class StudentController extends Controller
 {
   /**
@@ -63,45 +62,61 @@ class StudentController extends Controller
     return view('students.show', compact('student', 'student'));
   }
 
-
-
-  public function edit($id)
-  {
-    $student = Student::find($id);
-    return view('students.edit', compact('student', 'student'));
-  }
-
-
-  public function update(Request $request, $id)
-  {
-    $student = Student::find($id);
-
-    $this->validate($request, [
-      'first_name' => 'required',
-      'last_name' => 'required',
-      'age' => 'required|numeric',
-      'email' => 'required|email',
-    ]);
-
-    $input = $request->all();
-
-    $student->fill($input)->save();
-
-    return redirect()->route('studnets.index');
-  }
-
   /**
-   * Remove the specified resource from storage.
+   * Show the form for editing the specified resource.
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function edit($id)
   {
-    $student = Student::findOrFail($id);
+    $student = Student::find($id);
 
-    $student->delte();
-
-    return redirect()->route('students.index');
+    return view('students.edit', compact('student', 'student'));
   }
+
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id)
+  {
+   $stude
+  nt = Student::findOrFail($id);
+
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required', 
+            'age' =>
+  'required|numeric',
+ 
+   
+ 
+       'email' => 'required|email',
+        ]);
+
+        $input = $request->all();
+
+        $student->fill($input)->save();
+
+        return redirect()->route('students.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $student = Student::findOrFail($id);
+
+        $student->delete();
+        
+        return redirect()->route('students.index');
+    }
 }
